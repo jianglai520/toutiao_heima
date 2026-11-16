@@ -47,14 +47,14 @@ async def login(user_data: UserRequest, db: AsyncSession = Depends(get_db)):
 
 # 查Token用户 --> 封装crud --> 功能整合成一个工具函数 --> 路由导入使用:依赖注入
 @router.get("/info")
-async def get_user_info(user: User = Depends(get_current_user)):
+async def get_user_info(user: users.User = Depends(get_current_user)):
     return success_response(message = "获取用户信息成功", data = UserInfoResponse.model_validate(user))
 
 
 # 修改用户信息: 验证Token --> 更新（用户输入数据--put-->请求体参数-->定义pydantic模型类）--> 响应结果
 # 参数：用户输入数据 + 验证Token的 + db(调用更新方法)
 @router.put("/update")
-async def update_user_info(user_data: UserUpdateRequest, user: User = Depends(get_current_user), db: AsyncSession = Depends(get_db)):
+async def update_user_info(user_data: UserUpdateRequest, user: users.User = Depends(get_current_user), db: AsyncSession = Depends(get_db)):
     updated_user = await users.update_user(db, user.username, user_data)
     return success_response(message = "修改用户信息成功", data = UserInfoResponse.model_validate(updated_user))
 
@@ -64,7 +64,7 @@ async def update_user_info(user_data: UserUpdateRequest, user: User = Depends(ge
 @router.put("/password")
 async def update_password(
         password_data: UserChangePasswordRequest,
-        user: User = Depends(get_current_user),
+        user: users.User = Depends(get_current_user),
         db: AsyncSession = Depends(get_db)):
     res_change_pwd = await users.change_password(db, user, password_data.old_password, password_data.new_password)
     if not res_change_pwd:

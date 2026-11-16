@@ -27,7 +27,7 @@ export const useHistoryStore = defineStore('history', {
           { newsId },
           { 
             headers: { 
-              Authorization: userStore.token 
+              Authorization: `Bearer ${userStore.token}` 
             } 
           }
         );
@@ -89,7 +89,7 @@ export const useHistoryStore = defineStore('history', {
         console.log('清空浏览历史API：开始请求');
         const response = await axios.delete(`${apiConfig.baseURL}/api/history/clear`, { 
           headers: { 
-            Authorization: userStore.token 
+            Authorization: `Bearer ${userStore.token}` 
           } 
         });
         
@@ -129,7 +129,7 @@ export const useHistoryStore = defineStore('history', {
         console.log('删除浏览历史API：开始请求', id);
         const response = await axios.delete(`${apiConfig.baseURL}/api/history/delete/${id}`, { 
           headers: { 
-            Authorization: userStore.token 
+            Authorization: `Bearer ${userStore.token}` 
           } 
         });
         
@@ -175,7 +175,7 @@ export const useHistoryStore = defineStore('history', {
         console.log('获取浏览历史API：开始请求');
         const response = await axios.get(`${apiConfig.baseURL}/api/history/list`, { 
           headers: { 
-            Authorization: userStore.token 
+            Authorization: `Bearer ${userStore.token}` 
           } 
         });
         

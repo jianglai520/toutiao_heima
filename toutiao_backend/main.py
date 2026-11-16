@@ -5,6 +5,16 @@ from utils.exception_handlers import register_exception_handlers
 from contextlib import asynccontextmanager
 from config.cache_conf import check_redis_health, close_redis
 
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # 启动时：检查 Redis 连接
+    redis_ok = await check_redis_health()
+    if not redis_ok:
+        raise Exception("Redis 连接失败")
+    yield
+    # 关闭时：关闭 Redis 连接
+    await close_redis()
+
 app = FastAPI(lifespan=lifespan)
 
 # 注册异常处理器
@@ -29,12 +39,3 @@ app.include_router(users.router)
 app.include_router(favorite.router)
 app.include_router(history.router)
 
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    # 启动时：检查 Redis 连接
-    redis_ok = await check_redis_health()
-    if not redis_ok:
-        raise Exception("Redis 连接失败")
-    yield
-    # 关闭时：关闭 Redis 连接
-    await close_redis()

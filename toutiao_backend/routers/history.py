@@ -36,7 +36,7 @@ async def get_history_list(
     """
     rows, total = await history.get_history_list(db, user.id, page, page_size)
     has_more = total > page * page_size
-    history_list = [HistoryNewsTtemResponse.model_validate({
+    history_list = [HistoryNewsItemResponse.model_validate({
         **news.__dict__,
         "view_time": view_time,
         "history_id": history_id

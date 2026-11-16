@@ -15,7 +15,7 @@ http://localhost:8000
 大部分接口需要认证，认证通过在请求头中添加 `Authorization` 字段实现：
 
 ```
-Authorization: token值
+Authorization: Bearer token值
 ```
 
 ## 响应格式

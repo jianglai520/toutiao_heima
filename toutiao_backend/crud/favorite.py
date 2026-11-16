@@ -60,7 +60,7 @@ async def get_favorite_list(
     query = (select(News, Favorite.created_at.label("favorite_time"), Favorite.id.label("favorite_id"))
              .join(Favorite, Favorite.news_id == News.id)
              .where(Favorite.user_id == user_id)
-             .oder_by(Favorite.created_at.desc())
+             .order_by(Favorite.created_at.desc())
              .offset((page - 1) * page_size)
              .limit(page_size)
              )

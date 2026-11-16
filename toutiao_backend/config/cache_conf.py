@@ -6,6 +6,7 @@ from typing import Any
 REDIS_HOST = "localhost"
 REDIS_PORT = 6379
 REDIS_DB = 0
+REDIS_PASSWORD="Redis@picc364"
 
 
 # 创建redis的连接对象
@@ -13,6 +14,7 @@ redis_client = redis.Redis(
     host = REDIS_HOST,  # Redis服务器主机地址
     port = REDIS_PORT,   # Redis端口号
     db = REDIS_DB,   # Redis 数据库编号，0~15
+    password=REDIS_PASSWORD,
     decode_responses=True,   # 是否将字节数据解码为字符串
     socket_connect_timeout=5,   # 连接超时，单位秒
     socket_timeout = 5,   # 读取超时，单位秒
